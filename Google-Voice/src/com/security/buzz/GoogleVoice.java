@@ -19,6 +19,10 @@ public class GoogleVoice {
 	static String userName = "buzzguardian@gmail.com";
 	static String pass = "gtbuzz00";
 
+	// Returns a list of strings. 3 consecutive strings represent a SMS
+	// First string is sender number
+	// Second string is sms text
+	// Third string is time
 	public static List<String> getUnreadSMS() throws DocumentException {
 		
 		ArrayList<String> aList = new ArrayList<String>();
