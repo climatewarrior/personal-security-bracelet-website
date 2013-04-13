@@ -14,7 +14,7 @@
     <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAmEvPWMafJFafvXGR-ampYOLQVSWmP5xM&sensor=false"></script>
     <script src="http://code.jquery.com/jquery.min.js"></script>
     <script>
-    var lastUpdate = ''; // You need to decide what the server should return
+    var lastUpdate = '0'; // You need to decide what the server should return
     //  when you load the map the first time.
 
     function autoUpdate() {
@@ -36,7 +36,7 @@
             //    never be exactly in sync.
             //
 
-            lastUpdate = jsonData.timeStamp;
+            lastUpdate = jsonData.timestamp;
 
             // 3. Add new markers on Google Map.
             //
@@ -53,24 +53,22 @@
       });
     }
 
-
-
     var map;
     var image;
     function initialize() {
       image = './static/crimescene.png';
-      var myLatlng = new google.maps.LatLng(-25.363882,131.044922);
+      var gatech = new google.maps.LatLng(33.77658,-84.38993)
       var mapOptions = {
-        zoom: 4,
-        center: myLatlng,
+        zoom: 15,
+        center: gatech,
         mapTypeId: google.maps.MapTypeId.ROADMAP
       };
       map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-      autoUpdate();
     }
 
     // Function for adding a marker to the page.
     function addMarker(index, raw_location) {
+      map.setZoom(10);
       var location = new google.maps.LatLng(raw_location[0],raw_location[1]);
       console.log(location)
       marker = new google.maps.Marker({
@@ -78,12 +76,14 @@
         map: map,
         icon: image
       });
+      map.setZoom(15); // Zoom in after 1 sec
+      map.panTo(location);
     }
 
 
     </script>
   </head>
-  <body onload="initialize()">
+  <body onload="initialize(); autoUpdate();">
 
     <div id="map-canvas"></div>
   </body>

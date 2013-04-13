@@ -21,6 +21,7 @@ from flask.ext.bootstrap import Bootstrap
 
 import json_app
 import time
+from random import randint
 
 app = json_app.make_json_app('__main__')
 Bootstrap(app)
@@ -32,10 +33,24 @@ def index():
 
 @app.route('/get_data')
 def ajax():
+
+    old_timestamp = request.args.get('timestamp')
+    print old_timestamp
+    
     timestamp = time.time()
 
-    locations = [[-25.363882,131.044922], [33.762737,-84.401464]]
-    return jsonify({'timestamp':timestamp, 'locations':locations})
+    locations = \
+    [[33.77572,-84.39603],
+    [33.77508,-84.40041],
+    [33.77979,-84.40135],
+    [33.77993,-84.40907],
+    [33.77294,-84.39903],
+    [33.77615,-84.39611],
+    [33.77522,-84.38779],
+    [33.78043,-84.38753],
+    [33.78421,-84.38221]]
+
+    return jsonify({'timestamp':timestamp, 'locations':[locations[randint(0,len(locations)-1)]]})
 
 if __name__ == '__main__':
     app.run(debug=True)
