@@ -52,6 +52,11 @@ def ajax():
 
     return jsonify({'timestamp':timestamp, 'locations':[locations[randint(0,len(locations)-1)]]})
 
+@app.route('/sign_in')
+def sign_in():
+    return render_template("index.html")
+
+
 if __name__ == '__main__':
     app.run(debug=True)
 
