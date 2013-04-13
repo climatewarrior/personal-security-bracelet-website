@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-# Copyright (C) 2012 Gabriel J. Pérez Irizarry and Andrea Del Risco
+# Copyright (C) 2012 Gabriel J. Pérez Irizarry 
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License, version 3,
@@ -15,21 +15,26 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from flask import Flask, render_template, request, flash, redirect, url_for, jsonify
-
-from flask.ext.bootstrap import Bootstrap
+from flask import Flask, render_template, request, redirect, url_for, jsonify
 
 import json_app
 import time
 from random import randint
 
 app = json_app.make_json_app('__main__')
-Bootstrap(app)
 
 @app.route('/')
 def index():
-    
+    return render_template('welcome.html')
+
+@app.route('/maps')
+def maps():
     return render_template('maps.html')
+
+@app.route('/table')
+def table():
+    return render_template('table.html')
+
 
 @app.route('/get_data')
 def ajax():
