@@ -16,19 +16,32 @@ import com.techventus.server.voice.Voice;
 
 public class GoogleVoice {
 	
-	static String userName = "buzzguardian@gmail.com";
-	static String pass = "gtbuzz00";
-
+	String userName;
+	String pass;
+	Voice voice;
+	
+	GoogleVoice()
+	{
+		userName = "buzzguardian@gmail.com";
+		pass = "gtbuzz00";
+		
+		try {
+			voice = new Voice(userName, pass);
+		}
+		catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
 	// Returns a list of strings. 3 consecutive strings represent a SMS
 	// First string is sender number
 	// Second string is sms text
 	// Third string is time
-	public static List<String> getUnreadSMS() throws DocumentException {
+	public List<String> getUnreadSMS() throws DocumentException {
 		
 		ArrayList<String> aList = new ArrayList<String>();
 		
 		try {
-			Voice voice = new Voice(userName, pass);
 			String recentMsg = voice.getUnreadSMS();
 			// System.out.println( recentMsg );
 			recentMsg = recentMsg.replace("<![CDATA[", "");
@@ -74,7 +87,10 @@ public class GoogleVoice {
 	
 	public static void main(String[] args) {
 		try {
-			getUnreadSMS();
+			GoogleVoice googleVoice = new GoogleVoice();
+			for (int i = 0; i < 100; ++i) {
+				googleVoice.getUnreadSMS();
+			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
