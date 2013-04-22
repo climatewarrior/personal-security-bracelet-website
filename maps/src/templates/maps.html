@@ -19,8 +19,9 @@
     <script src="http://code.jquery.com/jquery.min.js"></script>
 
     <script>
-    var lastUpdate = '0'; // You need to decide what the server should return
-    //  when you load the map the first time.
+    var lastUpdate = '0';
+
+    var allMarkers = [];
 
     function autoUpdate() {
       $.ajax({
@@ -51,6 +52,25 @@
 
             $.each(locations, addMarker);
 
+            for (var i=0; i < allMarkers.length; i++) {
+
+              if (i == 0) {
+                allMarkers[i].setIcon(start)
+              }
+
+              else if (i == allMarkers.length - 1) {
+                allMarkers[i].setIcon(finish)
+              }
+
+              else {
+
+                allMarkers[i].setIcon(path)
+              }
+
+            }
+
+
+
           }
           // 4. Relaunch the autoUpdate() function in 5 seconds.
           setTimeout(autoUpdate, 5000);
@@ -59,9 +79,11 @@
     }
 
     var map;
-    var image;
+    var start = './static/img/start.png';
+    var finish = './static/img/finish.png';
+    var path = './static/img/path.png';
+
     function initialize() {
-      image = './static/crimescene.png';
       var gatech = new google.maps.LatLng(33.77658,-84.38993)
       var mapOptions = {
         zoom: 15,
@@ -79,8 +101,9 @@
       marker = new google.maps.Marker({
         position: location,
         map: map,
-        icon: image
+        icon: finish
       });
+      allMarkers.push(marker);
       map.setZoom(15); // Zoom in after 1 sec
       map.panTo(location);
     }
